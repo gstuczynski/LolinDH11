@@ -11,27 +11,24 @@ IPAddress subnet(255, 255, 255, 0);
 
 #define DHTPIN 5
 #define DHTTYPE DHT11
-
+ 
 DHT dht(DHTPIN, DHTTYPE);
-
+ 
 void setup()
 {
   WiFi.begin(ssid, password);
   WiFi.config(ip, gateway, subnet);
   Serial.begin(9600);
   dht.begin();
+  
 }
-
 void loop()
 {
-  float temp = dht.readTemperature();
-  float hum = dht.readHumidity();
-  HTTPClient http;
-  http.begin("http://192.168.0.100:3000/data/temp=" + String(temp, 2) + "&hum=" + String(hum, 2));
-  http.GET();
-  Serial.println(temp);
-  Serial.println(("temp=" + String(temp, 2) + "&hum=" + String(hum, 2)));
-
-  http.end();
-  delay(6000);
+    float temp = dht.readTemperature();
+    float hum = dht.readHumidity();
+    HTTPClient http;
+    http.begin("http://192.168.0.100:3000/data/temp="+ String(temp, 2) + "&hum="+ String(hum, 2));
+    http.GET();
+    http.end();
+    delay(3600000);
 }
